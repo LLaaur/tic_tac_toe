@@ -7,8 +7,14 @@
     width: 100vw;
     height: 100vh;
     display: grid;
+    background-color: #a44730;
+}
+
+.content-container{
+    width: 100vw;
+    height: 80vh;
+    display: grid;
     align-items: center;
-    justify-content: space-evenly;
     justify-items: center;
     background-color: #a44730;
 }
