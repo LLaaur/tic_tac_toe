@@ -1,0 +1,55 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+
+.container{
+    width: 100vw;
+    height: 100vh;
+    display: grid;
+    align-items: center;
+    justify-content: space-evenly;
+    justify-items: center;
+    background-color: #a44730;
+}
+
+.center{
+    width: 300px;
+    display: grid;
+    justify-content: center;
+}
+
+.play,
+.player,
+.bot{
+    width: 10rem;
+    padding: .5rem 1.5rem;
+    font-size: 1.5rem;
+    cursor: pointer;
+    font-family: 'DynaPuff', cursive;
+    background-color: #E78F63;
+    border: none;
+    color: #fffee9;
+    border-radius: 5px;
+}
+
+.gif-container{
+    background-image: url(assets/giphy.webp);
+    width: 300px;
+    height: 300px;
+    background-size: contain;
+}
+
+.page-title{
+    font-size: 4rem;
+    font-family: 'DynaPuff', cursive;
+    color: #F7C7B1;
+}
+
+.players{
+    width: 500px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    justify-content: center;
+    justify-items: center;
+}
