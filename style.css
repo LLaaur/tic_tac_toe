@@ -114,3 +114,34 @@
 .circle-3 {
     animation-delay: 0.3s;
 }
+
+.game-screen{
+    width: 100vw;
+    height: 100vh;
+    display: grid;
+    justify-content: center;
+    align-items: center;
+    background-color: #a44730;
+    display: none;
+}
+
+.game-board{
+    width: 618px;
+    height: 618px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    align-items: center;
+    justify-items: center;
+}
+
+.square{
+    width: 200px;
+    height: 200px;
+    border: 3px solid #F7C7B1;
+    cursor: pointer;
+    border-radius: 15%;
+}
+
+.square:active{
+    background-color: brown;
+}
