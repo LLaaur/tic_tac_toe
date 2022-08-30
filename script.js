@@ -10,6 +10,11 @@ const SwapScreens = (() =>{
         gameScreen.style.display = 'grid';
     };
 
+    const turnInfo = document.querySelector('[data-turn]');
+    if(gameScreen){
+        turnInfo.textContent = 'X turn'
+    }
+
     const playBtn = document.querySelector('[data-play]');
     const homePage = document.querySelector('[data-home]');
 
@@ -19,8 +24,13 @@ const SwapScreens = (() =>{
         setTimeout(showGameScreen, 3500)
     })
 
+    return{
+        turnInfo
+    }
 
 })();
+
+let match = 0;
 
 const GameBoard = (() => {
     
@@ -32,7 +42,9 @@ const GameBoard = (() => {
 
     restartBtn.addEventListener('click', () => {
         allBoardSquares.forEach(
-            square => square.textContent = ''
+            square => square.textContent = '',
+            SwapScreens.turnInfo.textContent = 'X turn',
+            match--
         );
     });
 
@@ -75,7 +87,7 @@ const gameFlow = ( () => {
     
     const Player1 = createPlayer('X');
     const Player2 = createPlayer('O');
-    let match = 1;
+
 
 
     const currentPlayer = () => {
@@ -84,8 +96,11 @@ const gameFlow = ( () => {
 
     const playMatch = (squareIndex) => {
         GameBoard.setSquares(squareIndex, currentPlayer());
+        SwapScreens.turnInfo.textContent = `${currentPlayer()} turn`
         match++;
     }
+
+
 
     const checkWinner = (squareIndex) => {
         const winIndexes = [
