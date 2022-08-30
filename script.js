@@ -1,9 +1,5 @@
 "use strict";
 
-const createPlayer = (player, mark) => {
-    return{player, mark};
-}
-
 const SwapScreens = (() =>{
 
     const loadPage = document.querySelector('[data-load]');
@@ -13,12 +9,6 @@ const SwapScreens = (() =>{
         loadPage.style.display = 'none';
         gameScreen.style.display = 'grid';
     };
-
-    const turn = document.querySelector('[data-turn]');
-    
-    if (gameScreen){
-        turn.textContent = 'Player\'s X turn'
-    }
 
     const playBtn = document.querySelector('[data-play]');
     const homePage = document.querySelector('[data-home]');
@@ -31,7 +21,6 @@ const SwapScreens = (() =>{
 
 
 })();
-
 
 const GameBoard = (() => {
     
@@ -47,40 +36,74 @@ const GameBoard = (() => {
         );
     });
 
+    const setSquares = (index) => {
+        if (index > board.length){
+            return;
+        }
+        return board[index];
+    }
+
+
+
     allBoardSquares.forEach( (square, index) => {
         square.addEventListener('click', () => {
-            square.textContent = gameFlow.Player1.mark;
+            gameFlow.playMatch();
+            square.textContent = gameFlow.currentPlayer();
         })
     })
     
     return{
-        board
+        board,
+        setSquares
     }
 
 })();
 
+
+
 const gameFlow = ( () => {
+
+    const createPlayer = (mark) => {
+        this.mark = mark;
+
+        const getMark = () => {
+            return mark
+        };
+
+        return {getMark};
+    }
     
-    const Player1 = createPlayer('Player 1', 'X');
-    const Player2 = createPlayer('Player 2', '0');
+    const Player1 = createPlayer('X');
+    const Player2 = createPlayer('O');
+    let match = 1;
 
 
-    let winnerStatus = document.querySelector('[data-status]');
+    const currentPlayer = () => {
+        return match % 2 === 1 ? Player1.getMark() : Player2.getMark();
+    }
 
-    const winningIndexes = [
-        [0,1,2],
-        [3,4,5],
-        [6,7,8],
-        [0,3,6],
-        [1,4,7],
-        [2,5,8],
-        [0,4,8],
-        [2,4,6]
-    ];
+    const playMatch = (squareIndex) => {
+        GameBoard.setSquares(squareIndex, currentPlayer());
+        match++;
+    }
+
+    const checkWinner = (squareIndex) => {
+        const winIndexes = [
+            [0, 1, 2],
+            [3, 4, 5],
+            [6, 7, 8],
+            [0, 3, 6],
+            [1, 4, 7],
+            [2, 5, 8],
+            [0, 4, 8],
+            [2, 4, 6]
+        ]
+    }
 
     return{
-      Player1,
-      Player2
-    };
+      playMatch,
+      currentPlayer
+    }
 
+    
 })();
