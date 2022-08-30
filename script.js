@@ -12,8 +12,8 @@ const SwapScreens = (() =>{
 
     const turnInfo = document.querySelector('[data-turn]');
     if(gameScreen){
-        turnInfo.textContent = 'X turn'
-    }
+        turnInfo.textContent = 'X turn';
+    };
 
     const playBtn = document.querySelector('[data-play]');
     const homePage = document.querySelector('[data-home]');
@@ -21,8 +21,8 @@ const SwapScreens = (() =>{
     playBtn.addEventListener('click', () => {
         homePage.style.display = 'none';
         loadPage.style.display = 'grid';
-        setTimeout(showGameScreen, 3500)
-    })
+        setTimeout(showGameScreen, 3500);
+    });
 
     return{
         turnInfo
@@ -44,11 +44,12 @@ const GameBoard = (() => {
         allBoardSquares.forEach(
             square => square.textContent = '',
             SwapScreens.turnInfo.textContent = 'X turn',
-            match--
+            match = 0,
+            populateSquares()
         );
     });
 
-    const setSquares = (index) => {
+    const getSquares = (index) => {
         if (index > board.length){
             return;
         }
@@ -56,17 +57,26 @@ const GameBoard = (() => {
     }
 
 
-
-    allBoardSquares.forEach( (square, index) => {
-        square.addEventListener('click', () => {
-            gameFlow.playMatch();
-            square.textContent = gameFlow.currentPlayer();
+    const populateSquares = () => {
+        allBoardSquares.forEach((square, index) => {
+            square.addEventListener('click', () => {
+                gameFlow.playMatch();
+                if (square.textContent == '') {
+                    square.textContent = gameFlow.currentPlayer();
+                }
+                if (match === 9) {
+                    SwapScreens.turnInfo.textContent = 'Tie!';
+                    return;
+                }
+            }, { once: true })
         })
-    })
+    }
+    populateSquares();
     
     return{
         board,
-        setSquares
+        getSquares,
+        populateSquares
     }
 
 })();
@@ -95,7 +105,7 @@ const gameFlow = ( () => {
     }
 
     const playMatch = (squareIndex) => {
-        GameBoard.setSquares(squareIndex, currentPlayer());
+        GameBoard.getSquares(squareIndex, currentPlayer());
         SwapScreens.turnInfo.textContent = `${currentPlayer()} turn`
         match++;
     }
@@ -114,10 +124,12 @@ const gameFlow = ( () => {
             [2, 4, 6]
         ]
     }
+    
 
     return{
       playMatch,
-      currentPlayer
+      currentPlayer,
+      checkWinner
     }
 
     
