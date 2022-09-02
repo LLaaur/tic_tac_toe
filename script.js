@@ -1,5 +1,7 @@
 "use strict";
 
+// module for swapping between the homepage, loading screen and game screen
+
 const SwapScreens = (() =>{
 
     const loadPage = document.querySelector('[data-load]');
@@ -33,17 +35,19 @@ const SwapScreens = (() =>{
 
 })();
 
+// global variable to increment each number of turns between players
+
 let match = 0;
 
 const GameBoard = (() => {
     
     let board = ['', '', '', '', '', '', '', '', ''];
 
-    const gameSquares = document.querySelector('[data-board]');
-
     const allBoardSquares = document.querySelectorAll('[data-square]');
 
     const restartBtn  = document.querySelector('[data-restart]');
+
+    // resetting the indexes of the game board
 
     const resetTable = () => {
         for (let i = 0; i < board.length; i++){
@@ -53,11 +57,17 @@ const GameBoard = (() => {
 
     restartBtn.addEventListener('click', () => {
         resetTable();
+        // empty the squares of the board
         allBoardSquares.forEach(square => square.replaceChildren());
+
+        // allow pointer events again
         allBoardSquares.forEach(square => square.style.pointerEvents = 'auto');
+
         SwapScreens.turnInfo.textContent = 'X turn';
         match = 0;
     });
+
+    // setter function for assigning the index of the square with the sign of the player
 
     const setSquares = (index, mark) => {
         if (index > board.length) {
@@ -66,6 +76,8 @@ const GameBoard = (() => {
         board[index] = mark;
     }
 
+    // getter function to return the square index from the game board
+
     const getSquares = (index) => {
         if (index > board.length){
             return;
@@ -73,6 +85,7 @@ const GameBoard = (() => {
         return board[index];
     }
 
+    // adding an event listener to each square of the board, checking for winning and tie conditions
 
     const populateSquares = (() => {
         allBoardSquares.forEach((square, squareIndex) => {
@@ -102,11 +115,8 @@ const GameBoard = (() => {
     
     
     return{
-        board,
         getSquares,
-        populateSquares,
-        setSquares,
-        allBoardSquares
+        setSquares
     }
 
 })();
@@ -128,11 +138,11 @@ const gameFlow = ( () => {
     const Player1 = createPlayer('X');
     const Player2 = createPlayer('O');
 
-
-
     const currentPlayer = () => {
         return match % 2 === 1 ? Player1.getMark() : Player2.getMark();
     }
+
+    // getting the index of the square and assigning them the player sign, swithcing between players
 
     const playMatch = (squareIndex) => {
         GameBoard.getSquares(squareIndex, currentPlayer());
@@ -140,6 +150,7 @@ const gameFlow = ( () => {
         match++;
     }
 
+    // winning indexes
 
     const checkWinner = (squareIndex) => {
         const winIndexes = [

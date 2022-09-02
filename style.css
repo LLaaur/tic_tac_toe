@@ -1,6 +1,7 @@
 *{
     margin: 0;
     padding: 0;
+    font-family: 'DynaPuff', cursive;
 }
 
 .container{
@@ -32,7 +33,6 @@
     padding: .5rem 1.5rem;
     font-size: 1.5rem;
     cursor: pointer;
-    font-family: 'DynaPuff', cursive;
     background-color: #E78F63;
     border: none;
     color: #fffee9;
@@ -48,7 +48,6 @@
 
 .page-title{
     font-size: 4rem;
-    font-family: 'DynaPuff', cursive;
     color: #F7C7B1;
 }
 
