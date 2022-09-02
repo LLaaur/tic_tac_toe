@@ -51,6 +51,7 @@ const GameBoard = (() => {
 
     restartBtn.addEventListener('click', () => {
         allBoardSquares.forEach(square => square.replaceChildren());
+        allBoardSquares.forEach(square => square.style.pointerEvents = 'auto');
         resetTable();
         SwapScreens.turnInfo.textContent = 'X turn';
         match = 0;
@@ -74,23 +75,23 @@ const GameBoard = (() => {
 
     const populateSquares = () => {
         allBoardSquares.forEach((square, squareIndex) => {
-            square.addEventListener('click', () => {
+            square.addEventListener('click', (e) => {
                 gameFlow.playMatch();
+                e.target.style.pointerEvents = 'none';
+                if (e.target.textContent == '') {
+                    e.target.textContent = gameFlow.currentPlayer()
+                };
+                
                 setSquares(squareIndex, gameFlow.currentPlayer());
                 if (gameFlow.checkWinner(squareIndex, gameFlow.currentPlayer(squareIndex))) {
                     SwapScreens.turnInfo.textContent = `${gameFlow.currentPlayer()} won this match!`;
-                    console.log('sup');
                 }
-                if (square.textContent !== ''){
-                    return
-                }
-                if (square.textContent == '') {
-                    square.textContent = gameFlow.currentPlayer();
-                }
+
                 if (match === 9) {
                     SwapScreens.turnInfo.textContent = 'Tie!';
                     return;
                 }
+
             }, );
         });
     };
