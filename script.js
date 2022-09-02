@@ -42,25 +42,37 @@ const GameBoard = (() => {
 
     restartBtn.addEventListener('click', () => {
         allBoardSquares.forEach(
-            square => square.textContent = '',
+            square => square.textContent = '  ',
             SwapScreens.turnInfo.textContent = 'X turn',
             match = 0,
-            populateSquares()
+            populateSquares
         );
     });
+
+    const setSquares = (index, mark) => {
+        if (index > board.length) {
+            return;
+        };
+        board[index] = mark;
+    }
 
     const getSquares = (index) => {
         if (index > board.length){
             return;
-        }
+        };
         return board[index];
     }
 
 
     const populateSquares = () => {
-        allBoardSquares.forEach((square, index) => {
+        allBoardSquares.forEach((square, squareIndex) => {
             square.addEventListener('click', () => {
                 gameFlow.playMatch();
+                setSquares(squareIndex, gameFlow.currentPlayer());
+                if (gameFlow.checkWinner(squareIndex, gameFlow.currentPlayer(squareIndex))) {
+                    SwapScreens.turnInfo.textContent = `${gameFlow.currentPlayer()} won this match!`;
+                    console.log('sup');
+                }
                 if (square.textContent == '') {
                     square.textContent = gameFlow.currentPlayer();
                 }
@@ -76,7 +88,9 @@ const GameBoard = (() => {
     return{
         board,
         getSquares,
-        populateSquares
+        populateSquares,
+        setSquares,
+        allBoardSquares
     }
 
 })();
@@ -111,7 +125,6 @@ const gameFlow = ( () => {
     }
 
 
-
     const checkWinner = (squareIndex) => {
         const winIndexes = [
             [0, 1, 2],
@@ -122,14 +135,22 @@ const gameFlow = ( () => {
             [2, 5, 8],
             [0, 4, 8],
             [2, 4, 6]
-        ]
-    }
-    
+        ];
+
+        return winIndexes
+            .filter((combination) => combination.includes(squareIndex))
+            .some((possibleCombination) =>
+                possibleCombination.every(
+                    (index) => GameBoard.getSquares(index) === currentPlayer()
+                )
+            );
+
+    };
 
     return{
       playMatch,
       currentPlayer,
-      checkWinner
+      checkWinner,
     }
 
     
