@@ -39,6 +39,8 @@ const GameBoard = (() => {
     
     let board = ['', '', '', '', '', '', '', '', ''];
 
+    const gameSquares = document.querySelector('[data-board]');
+
     const allBoardSquares = document.querySelectorAll('[data-square]');
 
     const restartBtn  = document.querySelector('[data-restart]');
@@ -50,12 +52,11 @@ const GameBoard = (() => {
     };
 
     restartBtn.addEventListener('click', () => {
+        resetTable();
         allBoardSquares.forEach(square => square.replaceChildren());
         allBoardSquares.forEach(square => square.style.pointerEvents = 'auto');
-        resetTable();
         SwapScreens.turnInfo.textContent = 'X turn';
         match = 0;
-        populateSquares
     });
 
     const setSquares = (index, mark) => {
@@ -73,18 +74,21 @@ const GameBoard = (() => {
     }
 
 
-    const populateSquares = () => {
+    const populateSquares = (() => {
         allBoardSquares.forEach((square, squareIndex) => {
             square.addEventListener('click', (e) => {
                 gameFlow.playMatch();
+
                 e.target.style.pointerEvents = 'none';
+
                 if (e.target.textContent == '') {
                     e.target.textContent = gameFlow.currentPlayer()
                 };
                 
-                setSquares(squareIndex, gameFlow.currentPlayer());
+                setSquares(squareIndex, gameFlow.currentPlayer())
                 if (gameFlow.checkWinner(squareIndex, gameFlow.currentPlayer(squareIndex))) {
                     SwapScreens.turnInfo.textContent = `${gameFlow.currentPlayer()} won this match!`;
+                    allBoardSquares.forEach(square => square.style.pointerEvents = 'none');
                 }
 
                 if (match === 9) {
@@ -94,8 +98,8 @@ const GameBoard = (() => {
 
             }, );
         });
-    };
-    populateSquares();
+    })();
+    
     
     return{
         board,
