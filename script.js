@@ -25,7 +25,10 @@ const SwapScreens = (() =>{
     });
 
     return{
-        turnInfo
+        turnInfo,
+        loadPage,
+        gameScreen,
+        showGameScreen
     }
 
 })();
@@ -38,15 +41,20 @@ const GameBoard = (() => {
 
     const allBoardSquares = document.querySelectorAll('[data-square]');
 
-    const restartBtn = document.querySelector('[data-restart]');
+    const restartBtn  = document.querySelector('[data-restart]');
+
+    const resetTable = () => {
+        for (let i = 0; i < board.length; i++){
+            board[i] = '';
+        };
+    };
 
     restartBtn.addEventListener('click', () => {
-        allBoardSquares.forEach(
-            square => square.textContent = '  ',
-            SwapScreens.turnInfo.textContent = 'X turn',
-            match = 0,
-            populateSquares
-        );
+        allBoardSquares.forEach(square => square.replaceChildren());
+        resetTable();
+        SwapScreens.turnInfo.textContent = 'X turn';
+        match = 0;
+        populateSquares
     });
 
     const setSquares = (index, mark) => {
@@ -73,6 +81,9 @@ const GameBoard = (() => {
                     SwapScreens.turnInfo.textContent = `${gameFlow.currentPlayer()} won this match!`;
                     console.log('sup');
                 }
+                if (square.textContent !== ''){
+                    return
+                }
                 if (square.textContent == '') {
                     square.textContent = gameFlow.currentPlayer();
                 }
@@ -80,9 +91,9 @@ const GameBoard = (() => {
                     SwapScreens.turnInfo.textContent = 'Tie!';
                     return;
                 }
-            }, { once: true })
-        })
-    }
+            }, );
+        });
+    };
     populateSquares();
     
     return{
