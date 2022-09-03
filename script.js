@@ -17,10 +17,10 @@ const SwapScreens = (() =>{
         turnInfo.textContent = 'X turn';
     };
 
-    const playBtn = document.querySelector('[data-play]');
+    const playerBtn = document.querySelector('[data-player]');
     const homePage = document.querySelector('[data-home]');
 
-    playBtn.addEventListener('click', () => {
+    playerBtn.addEventListener('click', () => {
         homePage.style.display = 'none';
         loadPage.style.display = 'grid';
         setTimeout(showGameScreen, 3500);

@@ -18,6 +18,7 @@
     display: grid;
     align-items: center;
     justify-items: center;
+    align-content: space-evenly;
 }
 
 .center{
@@ -178,4 +179,33 @@
     display: grid;
     justify-content: center;
     color: #F7C7B1;
+}
+
+.player-pic,
+.bot-pic{
+    background-image: url(assets/player.png);
+    width: 100px;
+    height: 100px;
+    background-size: contain;
+    margin-left: 1.5rem;
+}
+
+.player-choice,
+.bot-choice{
+    display: grid;
+    width: 200px;
+    height: 150px;
+    justify-items: center;
+}
+
+.bot-pic{
+    background-image: url(assets/bot.png);
+    margin-right: 1.8rem;
+    margin-bottom: 0.2rem;
+}
+
+.player-choice:hover .player-pic,
+.bot-choice:hover .bot-pic{
+    transform: scale(1.1);
+    transition: 0.3s ease;
 }
