@@ -23,14 +23,25 @@ const SwapScreens = (() =>{
     playerBtn.addEventListener('click', () => {
         homePage.style.display = 'none';
         loadPage.style.display = 'grid';
-        setTimeout(showGameScreen, 3500);
+        setTimeout(showGameScreen, 2500);
     });
+
+    const botBtn  =  document.querySelector('[data-bot]');
+
+    botBtn.addEventListener('click', () => {
+        homePage.style.display = 'none';
+        loadPage.style.display = 'grid';
+        setTimeout(showGameScreen, 2500);
+    })
+
 
     return{
         turnInfo,
         loadPage,
         gameScreen,
-        showGameScreen
+        showGameScreen,
+        playerBtn,
+        botBtn
     }
 
 })();
@@ -40,17 +51,17 @@ const SwapScreens = (() =>{
 let match = 0;
 
 const GameBoard = (() => {
-    
+
     let board = ['', '', '', '', '', '', '', '', ''];
 
     const allBoardSquares = document.querySelectorAll('[data-square]');
 
-    const restartBtn  = document.querySelector('[data-restart]');
+    const restartBtn = document.querySelector('[data-restart]');
 
     // resetting the indexes of the game board
 
     const resetTable = () => {
-        for (let i = 0; i < board.length; i++){
+        for (let i = 0; i < board.length; i++) {
             board[i] = '';
         };
     };
@@ -79,7 +90,7 @@ const GameBoard = (() => {
     // getter function to return the square index from the game board
 
     const getSquares = (index) => {
-        if (index > board.length){
+        if (index > board.length) {
             return;
         };
         return board[index];
@@ -87,34 +98,51 @@ const GameBoard = (() => {
 
     // adding an event listener to each square of the board, checking for winning and tie conditions
 
-    const populateSquares = (() => {
-        allBoardSquares.forEach((square, squareIndex) => {
-            square.addEventListener('click', (e) => {
-                gameFlow.playMatch();
 
-                e.target.style.pointerEvents = 'none';
+    // PLAYER VS PLAYER
 
-                if (e.target.textContent == '') {
-                    e.target.textContent = gameFlow.currentPlayer()
-                };
-                
-                setSquares(squareIndex, gameFlow.currentPlayer())
-                if (gameFlow.checkWinner(squareIndex, gameFlow.currentPlayer(squareIndex))) {
-                    SwapScreens.turnInfo.textContent = `${gameFlow.currentPlayer()} won this match!`;
-                    allBoardSquares.forEach(square => square.style.pointerEvents = 'none');
-                }
+    allBoardSquares.forEach((square, squareIndex) => {
+        square.addEventListener('click', (e) => {
+            gameFlow.playMatch();
 
-                if (match === 9) {
-                    SwapScreens.turnInfo.textContent = 'Tie!';
-                    return;
-                }
+            e.target.style.pointerEvents = 'none';
 
-            }, );
-        });
-    })();
-    
-    
-    return{
+            if (e.target.textContent == '') {
+                e.target.textContent = gameFlow.currentPlayer()
+            }
+
+            setSquares(squareIndex, gameFlow.currentPlayer())
+            if (gameFlow.checkWinner(squareIndex, gameFlow.currentPlayer(squareIndex))) {
+                SwapScreens.turnInfo.textContent = `${gameFlow.currentPlayer()} won this match!`;
+                allBoardSquares.forEach(square => square.style.pointerEvents = 'none');
+            }
+
+            if (match === 9) {
+                SwapScreens.turnInfo.textContent = 'Tie!';
+                return;
+            }
+
+        },);
+    });
+
+
+    // PLAYER VS BOT
+
+    const botPlay = () => {
+        
+        // temporary measure until building the bot choices using minmax algorithm
+        
+        if (SwapScreens.botBtn){
+            allBoardSquares.forEach(square => square.style.pointerEvents = 'none');
+        }
+
+
+
+    };
+    botPlay();
+
+
+    return {
         getSquares,
         setSquares
     }
