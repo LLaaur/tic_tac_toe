@@ -187,7 +187,7 @@
     width: 100px;
     height: 100px;
     background-size: contain;
-    margin-left: 1.5rem;
+    margin-left: 1.7rem;
 }
 
 .player-choice,
@@ -200,7 +200,7 @@
 
 .bot-pic{
     background-image: url(assets/bot.png);
-    margin-right: 1.8rem;
+    margin-right: 1.4rem;
     margin-bottom: 0.2rem;
 }
 
