@@ -26,22 +26,11 @@ const SwapScreens = (() =>{
         setTimeout(showGameScreen, 2500);
     });
 
-    const botBtn  =  document.querySelector('[data-bot]');
-
-    botBtn.addEventListener('click', () => {
-        homePage.style.display = 'none';
-        loadPage.style.display = 'grid';
-        setTimeout(showGameScreen, 2500);
-    })
-
-
     return{
         turnInfo,
         loadPage,
         gameScreen,
-        showGameScreen,
-        playerBtn,
-        botBtn
+        showGameScreen
     }
 
 })();
@@ -98,9 +87,6 @@ const GameBoard = (() => {
 
     // adding an event listener to each square of the board, checking for winning and tie conditions
 
-
-    // PLAYER VS PLAYER
-
     allBoardSquares.forEach((square, squareIndex) => {
         square.addEventListener('click', (e) => {
             gameFlow.playMatch();
@@ -124,22 +110,6 @@ const GameBoard = (() => {
 
         },);
     });
-
-
-    // PLAYER VS BOT
-
-    const botPlay = () => {
-        
-        // temporary measure until building the bot choices using minmax algorithm
-        
-        if (SwapScreens.botBtn){
-            allBoardSquares.forEach(square => square.style.pointerEvents = 'none');
-        }
-
-
-
-    };
-    botPlay();
 
 
     return {

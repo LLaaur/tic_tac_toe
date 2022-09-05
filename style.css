@@ -27,9 +27,7 @@
     justify-content: center;
 }
 
-.play,
-.player,
-.bot{
+.player{
     width: 10rem;
     padding: .5rem 1.5rem;
     font-size: 1.5rem;
@@ -55,7 +53,6 @@
 .players{
     width: 500px;
     display: grid;
-    grid-template-columns: 1fr 1fr;
     justify-content: center;
     justify-items: center;
 }
@@ -72,7 +69,6 @@
 }
 
 .loading-screen p{
-    font-family: 'DynaPuff', cursive, sans-serif;
     font-size: 2rem;
     color: white;
 }
@@ -158,7 +154,6 @@
 
 .restart button{
     font-size: 1.5rem;
-    font-family: 'DynaPuff', cursive, sans-serif;
     padding: 0.5rem 1.5rem;
     cursor: pointer;
     background-color: #F7C7B1;
@@ -174,15 +169,13 @@
 
 .turn{
     font-size: 4rem;
-    font-family: 'DynaPuff', cursive, sans-serif;
     width: 100%;
     display: grid;
     justify-content: center;
     color: #F7C7B1;
 }
 
-.player-pic,
-.bot-pic{
+.player-pic{
     background-image: url(assets/player.png);
     width: 100px;
     height: 100px;
@@ -190,22 +183,14 @@
     margin-left: 1.7rem;
 }
 
-.player-choice,
-.bot-choice{
+.player-choice{
     display: grid;
     width: 200px;
     height: 150px;
     justify-items: center;
 }
 
-.bot-pic{
-    background-image: url(assets/bot.png);
-    margin-right: 1.4rem;
-    margin-bottom: 0.2rem;
-}
-
-.player-choice:hover .player-pic,
-.bot-choice:hover .bot-pic{
+.player-choice:hover .player-pic{
     transform: scale(1.1);
     transition: 0.3s ease;
 }
