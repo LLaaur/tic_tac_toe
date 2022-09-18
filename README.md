@@ -16,4 +16,4 @@ IV. Associate arrays with DOM elements.
 
 V. Using IIFE (Immediately invoked functions expresions).
 
-👉 <a href="https://llaaur.github.io/tic_tac_toe/"> Live demo
+👉 <a href="https://llaaur.github.io/tic_tac_toe/" target="_blank"> Live demo
